@@ -1,42 +1,36 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
 import { ArrowRight } from "lucide-react";
-
-// Demo placeholder projects
-const featuredProjects = [
-  {
-    title: "Meridian Financial",
-    category: "Brand Identity",
-    slug: "meridian-financial",
-    color: "#0D7377",
-  },
-  {
-    title: "Apex Athletics",
-    category: "Logo Design",
-    slug: "apex-athletics",
-    color: "#14B8A6",
-  },
-  {
-    title: "Prism Gallery",
-    category: "Web Development",
-    slug: "prism-gallery",
-    color: "#0D7377",
-  },
-  {
-    title: "Volta Festival",
-    category: "Event Campaign",
-    slug: "volta-festival",
-    color: "#14B8A6",
-  },
-];
+import { createClient } from "@/lib/supabase/client";
+import { Project } from "@/types";
 
 export function WorkShowcase() {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+  const supabase = createClient();
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  useEffect(() => {
+    async function fetchProjects() {
+      const { data } = await supabase
+        .from("projects")
+        .select("*")
+        .eq("is_featured", true)
+        .order("display_order", { ascending: true })
+        .limit(4);
+      
+      if (data) setProjects(data);
+      setLoading(false);
+    }
+    fetchProjects();
+  }, [supabase]);
+
+  if (loading) return null;
 
   return (
     <section className="section-padding" id="work-preview">
@@ -71,25 +65,28 @@ export function WorkShowcase() {
           animate={isInView ? "visible" : "hidden"}
           className="grid grid-cols-1 md:grid-cols-2 gap-6"
         >
-          {featuredProjects.map((project, i) => (
+          {projects.map((project, i) => (
             <motion.div
-              key={project.slug}
+              key={project.id}
               variants={fadeInUp}
               className={i === 0 ? "md:row-span-2" : ""}
             >
               <Link href={`/work/${project.slug}`} className="block group">
                 <div
-                  className={`relative overflow-hidden rounded-2xl ${
-                    i === 0 ? "h-[400px] md:h-full" : "h-[250px] md:h-[280px]"
+                  className={`relative overflow-hidden rounded-2xl bg-[var(--bg-surface)] ${
+                    i === 0 ? "min-h-[400px] md:h-full" : "h-[250px] md:h-[280px]"
                   }`}
                 >
-                  {/* Gradient background as thumbnail placeholder */}
-                  <div
-                    className="absolute inset-0 transition-transform duration-700 group-hover:scale-105"
-                    style={{
-                      background: `linear-gradient(135deg, ${project.color}33, var(--bg-surface))`,
-                    }}
-                  />
+                  {/* Thumbnail Image */}
+                  {project.thumbnail_url ? (
+                    <img
+                      src={project.thumbnail_url}
+                      alt={project.title}
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 bg-gradient-to-br from-[var(--bg-elevated)] to-[var(--bg-surface)]" />
+                  )}
 
                   {/* Logo watermark */}
                   <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-700 pointer-events-none p-12">
@@ -101,9 +98,9 @@ export function WorkShowcase() {
                   </div>
 
                   {/* Content overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-deep)]/80 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-deep)]/90 via-[var(--bg-deep)]/20 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <span className="text-label text-xs">{project.category}</span>
+                    <span className="text-label text-[10px] uppercase tracking-widest">{project.category}</span>
                     <h3 className="heading-section text-xl md:text-2xl mt-2 group-hover:text-[var(--accent-teal-light)] transition-colors">
                       {project.title}
                     </h3>
