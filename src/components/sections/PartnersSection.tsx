@@ -14,14 +14,24 @@ export function PartnersSection() {
   const supabase = createClient();
 
   useEffect(() => {
+    // Only attempt fetch if environment variables are present
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+      console.warn("Supabase configuration missing in PartnersSection.");
+      return;
+    }
+
     async function fetchPartners() {
-      const { data } = await supabase
-        .from("partners")
-        .select("id, name")
-        .eq("is_active", true)
-        .order("display_order", { ascending: true });
-      
-      if (data) setPartners(data);
+      try {
+        const { data } = await supabase
+          .from("partners")
+          .select("id, name")
+          .eq("is_active", true)
+          .order("display_order", { ascending: true });
+        
+        if (data) setPartners(data);
+      } catch (e) {
+        console.error("Failed to fetch partners:", e);
+      }
     }
     fetchPartners();
   }, [supabase]);

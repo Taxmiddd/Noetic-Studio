@@ -21,6 +21,12 @@ export default function AdminPartnersPage() {
   const supabase = createClient();
 
   useEffect(() => {
+    // Only attempt fetch if environment variables are present
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+      console.warn("Supabase configuration missing in AdminPartnersPage.");
+      setLoading(false);
+      return;
+    }
     fetchPartners();
   }, []);
 
