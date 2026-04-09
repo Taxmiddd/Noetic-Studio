@@ -1,9 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { StatusIndicator } from "@/components/ui/StatusIndicator";
 
 export function Footer() {
+  const pathname = usePathname();
+
+  // Don't show on admin pages
+  if (pathname.startsWith("/admin")) return null;
   return (
     <footer className="relative border-t border-[var(--border-subtle)] bg-[var(--bg-deep)] pb-24 md:pb-0">
       {/* Gradient border top */}
