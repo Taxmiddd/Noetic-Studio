@@ -1,8 +1,8 @@
 import { HeroSection } from "@/components/hero/HeroSection";
 import { ServicesGrid } from "@/components/sections/ServicesGrid";
-import { PhilosophyBand } from "@/components/sections/PhilosophyBand";
+import { PhilosophySection } from "@/components/sections/PhilosophySection";
 import { WorkShowcase } from "@/components/sections/WorkShowcase";
-import { PartnersMarquee } from "@/components/sections/PartnersMarquee";
+import { PartnersSection } from "@/components/sections/PartnersSection";
 import { ContactCTA } from "@/components/sections/ContactCTA";
 
 export default function HomePage() {
@@ -10,9 +10,9 @@ export default function HomePage() {
     <>
       <HeroSection />
       <ServicesGrid />
-      <PhilosophyBand />
+      <PhilosophySection />
       <WorkShowcase />
-      <PartnersMarquee />
+      <PartnersSection />
       <ContactCTA />
     </>
   );

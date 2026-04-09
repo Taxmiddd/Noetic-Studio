@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { StatusIndicator } from "@/components/ui/StatusIndicator";
-import { Twitter, Instagram } from "lucide-react";
 
 export function Footer() {
   return (
@@ -42,7 +41,20 @@ export function Footer() {
               className="text-[var(--text-bone-dim)] hover:text-[var(--accent-teal-light)] transition-colors p-1"
               aria-label="X (Twitter)"
             >
-              <Twitter size={14} />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width={14}
+                height={14}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M4 4l11.733 16h4.267l-11.733-16z" />
+                <path d="M4 20l6.768-6.768m2.464-2.464l6.768-6.768" />
+              </svg>
             </a>
             <a
               href="https://www.instagram.com/thenoeticstudio/"
@@ -51,7 +63,21 @@ export function Footer() {
               className="text-[var(--text-bone-dim)] hover:text-[var(--accent-teal-light)] transition-colors p-1"
               aria-label="Instagram"
             >
-              <Instagram size={14} />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width={14}
+                height={14}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <rect width={20} height={20} x={2} y={2} rx={5} ry={5} />
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+              </svg>
             </a>
           </div>
           <div className="w-[1px] h-4 bg-[var(--border-subtle)] hidden md:block" />

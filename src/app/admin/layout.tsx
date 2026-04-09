@@ -9,6 +9,7 @@ import {
   LayoutDashboard,
   FolderKanban,
   MessageSquare,
+  Users,
   LogOut,
   ChevronLeft,
 } from "lucide-react";
@@ -17,6 +18,7 @@ const sidebarLinks = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/admin" },
   { icon: FolderKanban, label: "Projects", href: "/admin/projects" },
   { icon: MessageSquare, label: "Inquiries", href: "/admin/inquiries" },
+  { icon: Users, label: "Partners", href: "/admin/partners" },
 ];
 
 export default function AdminLayout({

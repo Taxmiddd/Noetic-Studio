@@ -92,11 +92,11 @@ export function WorkShowcase() {
                   />
 
                   {/* Logo watermark */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] group-hover:opacity-[0.07] transition-opacity duration-500 pointer-events-none">
+                  <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-700 pointer-events-none p-12">
                     <img 
-                      src="/logo1.svg" 
+                      src="/logo5.svg" 
                       alt="Watermark" 
-                      className="w-48 h-48 object-contain filter grayscale invert brightness-200" 
+                      className="w-full h-full object-contain grayscale invert" 
                     />
                   </div>
 

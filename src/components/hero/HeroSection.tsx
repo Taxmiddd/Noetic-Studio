@@ -57,7 +57,7 @@ export function HeroSection() {
           <div className="absolute inset-x-0 inset-y-0 bg-[var(--accent-teal)] opacity-[0.08] blur-[80px] rounded-full" />
           
           <img 
-            src="/logo3.svg" 
+            src="/logo7.svg" 
             alt="NOÉTIC" 
             className="w-full h-full object-contain relative z-10"
           />
