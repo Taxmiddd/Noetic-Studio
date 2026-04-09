@@ -53,7 +53,7 @@ export function Navbar() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "relative text-sm font-[family-name:var(--font-body)] tracking-widest uppercase transition-colors duration-300",
+                  "relative text-xs font-[family-name:var(--font-body)] tracking-[0.3em] uppercase transition-colors duration-300",
                   pathname === link.href
                     ? "text-[var(--accent-teal-light)]"
                     : "text-[var(--text-bone-muted)] hover:text-[var(--text-bone)]"
@@ -95,7 +95,7 @@ export function Navbar() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "relative text-sm font-[family-name:var(--font-body)] tracking-widest uppercase transition-colors duration-300",
+                  "relative text-xs font-[family-name:var(--font-body)] tracking-[0.3em] uppercase transition-colors duration-300",
                   pathname === link.href
                     ? "text-[var(--accent-teal-light)]"
                     : "text-[var(--text-bone-muted)] hover:text-[var(--text-bone)]"

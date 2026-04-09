@@ -85,20 +85,22 @@ export function ServicesGrid() {
             const Icon = service.icon;
             return (
               <motion.div key={service.title} variants={fadeInUp}>
-                <GlassCard className="h-full group cursor-pointer">
-                  <div className="flex flex-col gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] flex items-center justify-center group-hover:border-[var(--border-accent)] transition-colors duration-300">
-                      <Icon
-                        size={22}
-                        className="text-[var(--accent-teal-light)] group-hover:scale-110 transition-transform duration-300"
-                      />
+                <div className="h-full group cursor-pointer p-8 rounded-2xl border border-[var(--border-subtle)] hover:border-[var(--border-accent)] transition-all duration-500 bg-[var(--bg-deep)]">
+                  <div className="flex flex-col gap-6">
+                    <Icon
+                      size={24}
+                      className="text-[var(--accent-teal-light)] group-hover:scale-110 transition-transform duration-500 opacity-60 group-hover:opacity-100"
+                    />
+                    <div className="space-y-4">
+                      <h3 className="heading-section text-sm md:text-base tracking-[0.1em]">
+                        {service.title}
+                      </h3>
+                      <p className="text-body text-xs md:text-sm leading-relaxed opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+                        {service.description}
+                      </p>
                     </div>
-                    <h3 className="heading-section text-lg">{service.title}</h3>
-                    <p className="text-body text-sm leading-relaxed">
-                      {service.description}
-                    </p>
                   </div>
-                </GlassCard>
+                </div>
               </motion.div>
             );
           })}

@@ -84,7 +84,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 2.8 }}
-          className="text-body text-sm md:text-base lg:text-lg max-w-md"
+          className="text-[10px] md:text-xs uppercase tracking-[0.4em] text-[var(--accent-teal-light)] font-[family-name:var(--font-body)] opacity-70 max-w-md"
         >
           Creative Intelligence for the modern market
         </motion.p>
