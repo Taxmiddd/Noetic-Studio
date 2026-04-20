@@ -1,8 +1,12 @@
+export const runtime = "edge";
+
 import type { Metadata } from "next";
 import { Montserrat, Space_Grotesk, Playfair_Display } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { Footer } from "@/components/layout/Footer";
+import { SmoothScroll } from "@/components/ui/SmoothScroll";
+import { GlobalBackground } from "@/components/ui/GlobalBackground";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -75,13 +79,17 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${montserrat.variable} ${spaceGrotesk.variable} ${playfair.variable} h-full`}
+      className={`${montserrat.variable} ${spaceGrotesk.variable} ${playfair.variable}`}
     >
-      <body className="min-h-full flex flex-col bg-[var(--bg-deep)] text-[var(--text-bone)] antialiased">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
-        <MobileNav />
+      <body className="bg-[var(--bg-deep)] text-[var(--text-bone)] antialiased">
+        <SmoothScroll>
+          <div className="vignette" />
+          <GlobalBackground />
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <MobileNav />
+        </SmoothScroll>
       </body>
     </html>
   );

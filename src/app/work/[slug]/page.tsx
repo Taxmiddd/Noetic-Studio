@@ -2,71 +2,68 @@
 
 import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-
-const demoData: Record<string, {
-  title: string;
-  category: string;
-  client: string;
-  year: number;
-  services: string[];
-  description: string;
-  challenge: string;
-  solution: string;
-  color: string;
-}> = {
-  "meridian-financial": {
-    title: "Meridian Financial",
-    category: "Brand Identity",
-    client: "Meridian Group",
-    year: 2025,
-    services: ["Brand Strategy", "Visual Identity", "Brand Guidelines"],
-    description: "A comprehensive brand identity for a next-generation fintech platform transforming personal banking.",
-    challenge: "Meridian needed to stand apart in a saturated fintech landscape dominated by sterile, corporate aesthetics. They required a brand that felt both trustworthy and innovative.",
-    solution: "We crafted a visual system rooted in dynamic geometry and a refined teal-to-midnight palette — signaling precision without coldness. The identity extends across digital products, print collateral, and environmental design.",
-    color: "#0D7377",
-  },
-  "apex-athletics": {
-    title: "Apex Athletics",
-    category: "Logo Design",
-    client: "Apex Athletics Inc.",
-    year: 2025,
-    services: ["Logo Design", "Icon System", "Brand Guidelines"],
-    description: "A dynamic logo system for a premium fitness brand that embodies peak performance.",
-    challenge: "Create a mark that transcends typical fitness branding — something that speaks to discipline, precision, and aspiration.",
-    solution: "The Apex mark uses intersecting angular forms to create a sense of ascent and momentum. The system includes responsive logos for app icons, merchandise, and environmental signage.",
-    color: "#14B8A6",
-  },
-  "prism-gallery": {
-    title: "Prism Gallery",
-    category: "Web Development",
-    client: "Prism Contemporary",
-    year: 2024,
-    services: ["UI/UX Design", "Full-stack Development", "CMS Integration"],
-    description: "An immersive web platform for contemporary art curation and gallery management.",
-    challenge: "Build a digital space that honors the art without competing with it — minimal yet feature-rich for collectors and curators.",
-    solution: "We developed a Next.js platform with dynamic gallery views, GSAP scroll animations, and a headless CMS for seamless content management. The design uses negative space as a feature.",
-    color: "#0D7377",
-  },
-  "volta-festival": {
-    title: "Volta Festival",
-    category: "Event Campaign",
-    client: "Volta Events Ltd.",
-    year: 2024,
-    services: ["Creative Direction", "Campaign Design", "Digital Strategy"],
-    description: "A multi-channel campaign for an electronic music festival that reached 2M+ impressions.",
-    challenge: "Capture the energy of a live music experience in static and digital media across 8 platforms simultaneously.",
-    solution: "We designed a living campaign system with generative visuals, AR filters, and responsive social templates — all governed by a strict but flexible design language.",
-    color: "#14B8A6",
-  },
-};
+import { createClient } from "@/lib/supabase/client";
+import { Project } from "@/types";
 
 export default function CaseStudyPage() {
   const params = useParams();
   const slug = params.slug as string;
-  const project = demoData[slug];
+  
+  const [project, setProject] = useState<Project | null>(null);
+  const [prevProject, setPrevProject] = useState<Project | null>(null);
+  const [nextProject, setNextProject] = useState<Project | null>(null);
+  const [loading, setLoading] = useState(true);
+  
+  const supabase = createClient();
+
+  useEffect(() => {
+    async function fetchProjectData() {
+      setLoading(true);
+      
+      // 1. Fetch current project
+      const { data: currentProject } = await supabase
+        .from("projects")
+        .select("*")
+        .eq("slug", slug)
+        .single();
+        
+      if (!currentProject) {
+        setProject(null);
+        setLoading(false);
+        return;
+      }
+      
+      setProject(currentProject);
+      
+      // 2. Fetch all projects to find prev/next
+      const { data: allProjects } = await supabase
+        .from("projects")
+        .select("id, slug, title, display_order")
+        .order("display_order", { ascending: true });
+        
+      if (allProjects) {
+        const currentIndex = allProjects.findIndex(p => p.slug === slug);
+        if (currentIndex > 0) setPrevProject(allProjects[currentIndex - 1] as any);
+        if (currentIndex < allProjects.length - 1) setNextProject(allProjects[currentIndex + 1] as any);
+      }
+      
+      setLoading(false);
+    }
+    
+    fetchProjectData();
+  }, [slug, supabase]);
+
+  if (loading) {
+    return (
+      <div className="pt-[var(--nav-height)] min-h-screen flex items-center justify-center">
+        <div className="text-label animate-pulse">Loading project details...</div>
+      </div>
+    );
+  }
 
   if (!project) {
     return (
@@ -81,11 +78,6 @@ export default function CaseStudyPage() {
     );
   }
 
-  const slugs = Object.keys(demoData);
-  const currentIndex = slugs.indexOf(slug);
-  const prevSlug = currentIndex > 0 ? slugs[currentIndex - 1] : null;
-  const nextSlug = currentIndex < slugs.length - 1 ? slugs[currentIndex + 1] : null;
-
   return (
     <div className="pt-[var(--nav-height)]">
       {/* Hero */}
@@ -93,9 +85,16 @@ export default function CaseStudyPage() {
         <div
           className="absolute inset-0"
           style={{
-            background: `linear-gradient(135deg, ${project.color}30, var(--bg-deep))`,
+            background: `linear-gradient(135deg, ${project.thumbnail_url ? '#14B8A6' : '#0D7377'}30, var(--bg-deep))`,
           }}
         />
+        {project.thumbnail_url && (
+            <img 
+                src={project.thumbnail_url} 
+                alt="" 
+                className="absolute inset-0 w-full h-full object-cover opacity-20"
+            />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-deep)] via-transparent to-transparent" />
 
         {/* Star watermark */}
@@ -117,7 +116,7 @@ export default function CaseStudyPage() {
             >
               <ArrowLeft size={14} /> Back to Work
             </Link>
-            <span className="text-label block mb-3">{project.category}</span>
+            <span className="text-label block mb-3 uppercase tracking-widest">{project.category}</span>
             <h1 className="heading-display text-4xl md:text-5xl lg:text-6xl">
               {project.title}
             </h1>
@@ -137,7 +136,7 @@ export default function CaseStudyPage() {
             <div>
               <span className="text-label text-[10px] block mb-1">Client</span>
               <span className="text-sm text-[var(--text-bone)] font-[family-name:var(--font-body)]">
-                {project.client}
+                {project.client_name || "Confidential"}
               </span>
             </div>
             <div>
@@ -149,14 +148,14 @@ export default function CaseStudyPage() {
             <div className="col-span-2">
               <span className="text-label text-[10px] block mb-1">Services</span>
               <div className="flex flex-wrap gap-2">
-                {project.services.map((s) => (
+                {project.services?.map((s) => (
                   <span
                     key={s}
                     className="text-xs text-[var(--text-bone-muted)] bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-full px-3 py-1 font-[family-name:var(--font-body)]"
                   >
                     {s}
                   </span>
-                ))}
+                )) || <span className="text-xs text-[var(--text-bone-dim)]">Strategic Execution</span>}
               </div>
             </div>
           </motion.div>
@@ -172,71 +171,92 @@ export default function CaseStudyPage() {
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             <h2 className="heading-section text-2xl mb-4">Overview</h2>
-            <p className="text-body">{project.description}</p>
+            <p className="text-body whitespace-pre-line">{project.description}</p>
           </motion.div>
 
-          {/* Image placeholder */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden"
-          >
-            <div
-              className="absolute inset-0"
-              style={{
-                background: `linear-gradient(180deg, ${project.color}20, var(--bg-surface))`,
-              }}
-            />
-            <div className="absolute inset-0 flex items-center justify-center opacity-10">
-              <svg width="120" height="120" viewBox="0 0 100 100" fill="none">
-                <path d="M50 20 L55 45 L80 50 L55 55 L50 80 L45 55 L20 50 L45 45 Z" fill="var(--text-bone)" />
-              </svg>
+          {/* Project Images */}
+          {project.images && project.images.length > 0 ? (
+            <div className="space-y-8">
+                {project.images.map((img, i) => (
+                    <motion.div
+                        key={i}
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="relative rounded-2xl overflow-hidden border border-[var(--border-glass)]"
+                    >
+                        <img src={img} alt={`${project.title} screenshot ${i+1}`} className="w-full h-auto object-cover" />
+                    </motion.div>
+                ))}
             </div>
-          </motion.div>
+          ) : project.thumbnail_url ? (
+            <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="relative rounded-2xl overflow-hidden"
+            >
+                <img src={project.thumbnail_url} className="w-full h-auto object-cover" alt={project.title} />
+            </motion.div>          
+          ) : (
+            <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+                className="relative h-[300px] md:h-[400px] rounded-2xl overflow-hidden"
+            >
+                <div
+                className="absolute inset-0"
+                style={{
+                    background: `linear-gradient(180deg, rgba(20, 184, 166, 0.1), var(--bg-surface))`,
+                }}
+                />
+                <div className="absolute inset-0 flex items-center justify-center opacity-10">
+                <svg width="120" height="120" viewBox="0 0 100 100" fill="none">
+                    <path d="M50 20 L55 45 L80 50 L55 55 L50 80 L45 55 L20 50 L45 45 Z" fill="var(--text-bone)" />
+                </svg>
+                </div>
+            </motion.div>
+          )}
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="heading-section text-2xl mb-4">The Challenge</h2>
-            <p className="text-body">{project.challenge}</p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="heading-section text-2xl mb-4">The Solution</h2>
-            <p className="text-body">{project.solution}</p>
-          </motion.div>
+          {project.long_description && (
+             <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="prose prose-invert max-w-none"
+            >
+                <h2 className="heading-section text-2xl mb-4">Detailed Breakdown</h2>
+                <div className="text-body whitespace-pre-line text-lg">
+                    {project.long_description}
+                </div>
+            </motion.div>
+          )}
         </div>
       </section>
 
       {/* Navigation */}
       <section className="section-padding pt-8">
         <div className="max-w-7xl mx-auto flex justify-between border-t border-[var(--border-subtle)] pt-8">
-          {prevSlug ? (
+          {prevProject ? (
             <Link
-              href={`/work/${prevSlug}`}
-              className="flex items-center gap-2 text-sm text-[var(--text-bone-muted)] hover:text-[var(--text-bone)] transition-colors font-[family-name:var(--font-body)]"
+              href={`/work/${prevProject.slug}`}
+              className="flex items-center gap-2 text-sm text-[var(--text-bone-muted)] hover:text-[var(--text-bone)] transition-colors font-[family-name:var(--font-body)] group"
             >
-              <ArrowLeft size={16} /> Previous Project
+              <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> Previous: {prevProject.title}
             </Link>
           ) : (
             <div />
           )}
-          {nextSlug ? (
+          {nextProject ? (
             <Link
-              href={`/work/${nextSlug}`}
-              className="flex items-center gap-2 text-sm text-[var(--text-bone-muted)] hover:text-[var(--text-bone)] transition-colors font-[family-name:var(--font-body)]"
+              href={`/work/${nextProject.slug}`}
+              className="flex items-center gap-2 text-sm text-[var(--text-bone-muted)] hover:text-[var(--text-bone)] transition-colors font-[family-name:var(--font-body)] group"
             >
-              Next Project <ArrowRight size={16} />
+              Next: {nextProject.title} <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
             </Link>
           ) : (
             <div />

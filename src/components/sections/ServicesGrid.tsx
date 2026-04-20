@@ -85,17 +85,19 @@ export function ServicesGrid() {
             const Icon = service.icon;
             return (
               <motion.div key={service.title} variants={fadeInUp}>
-                <div className="h-full group cursor-pointer p-8 rounded-2xl border border-[var(--border-subtle)] hover:border-[var(--border-accent)] transition-all duration-500 bg-[var(--bg-deep)]">
-                  <div className="flex flex-col gap-6">
-                    <Icon
-                      size={24}
-                      className="text-[var(--accent-teal-light)] group-hover:scale-110 transition-transform duration-500 opacity-60 group-hover:opacity-100"
-                    />
-                    <div className="space-y-4">
-                      <h3 className="heading-section text-sm md:text-base tracking-[0.1em]">
+                <div className="h-full group cursor-pointer p-10 rounded-2xl border border-white/5 hover:border-white/10 transition-all duration-700 bg-black/40 backdrop-blur-sm">
+                  <div className="flex flex-col gap-10">
+                    <div className="w-12 h-12 rounded-full border border-white/5 flex items-center justify-center group-hover:border-[var(--accent-teal-light)]/30 group-hover:bg-[var(--accent-teal-light)]/5 transition-all duration-700">
+                      <Icon
+                        size={20}
+                        className="text-[var(--accent-teal-light)] opacity-40 group-hover:opacity-100 transition-all duration-700"
+                      />
+                    </div>
+                    <div className="space-y-6">
+                      <h3 className="heading-display text-lg tracking-[0.1em] opacity-80 group-hover:opacity-100 transition-opacity">
                         {service.title}
                       </h3>
-                      <p className="text-body text-xs md:text-sm leading-relaxed opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+                      <p className="text-xs md:text-sm leading-relaxed text-white/40 group-hover:text-white/60 transition-all duration-700 font-medium">
                         {service.description}
                       </p>
                     </div>

@@ -1,31 +1,69 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
-import { staggerContainer, fadeInUp } from "@/lib/animations";
+import { cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { Project } from "@/types";
+
+const demoBackups: Partial<Project>[] = [
+  {
+    id: "1",
+    title: "Meridian Financial",
+    category: "brand" as any,
+    slug: "meridian-financial",
+    thumbnail_url: "",
+  },
+  {
+    id: "2",
+    title: "Apex Athletics",
+    category: "logo" as any,
+    slug: "apex-athletics",
+    thumbnail_url: "",
+  },
+  {
+    id: "3",
+    title: "Prism Gallery",
+    category: "web" as any,
+    slug: "prism-gallery",
+    thumbnail_url: "",
+  },
+  {
+    id: "4",
+    title: "Volta Festival",
+    category: "campaign" as any,
+    slug: "volta-festival",
+    thumbnail_url: "",
+  },
+];
 
 export function WorkShowcase() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const supabase = createClient();
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   useEffect(() => {
     async function fetchProjects() {
-      const { data } = await supabase
-        .from("projects")
-        .select("*")
-        .eq("is_featured", true)
-        .order("display_order", { ascending: true })
-        .limit(4);
-      
-      if (data) setProjects(data);
-      setLoading(false);
+      try {
+        const { data } = await supabase
+          .from("projects")
+          .select("*")
+          .eq("is_featured", true)
+          .order("display_order", { ascending: true })
+          .limit(4);
+        
+        if (data && data.length > 0) {
+          setProjects(data);
+        } else {
+          setProjects(demoBackups as Project[]);
+        }
+      } catch (err) {
+        setProjects(demoBackups as Project[]);
+      } finally {
+        setLoading(false);
+      }
     }
     fetchProjects();
   }, [supabase]);
@@ -33,86 +71,97 @@ export function WorkShowcase() {
   if (loading) return null;
 
   return (
-    <section className="section-padding" id="work-preview">
+    <section className="section-padding relative z-10" id="work-preview">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4"
+           initial={{ opacity: 0, y: 20 }}
+           whileInView={{ opacity: 1, y: 0 }}
+           viewport={{ once: true, margin: "-10%" }}
+           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+           className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8"
         >
-          <div>
-            <span className="text-label mb-4 block">Selected Work</span>
-            <h2 className="heading-section text-3xl md:text-4xl lg:text-5xl">
+          <div className="max-w-2xl">
+            <span className="text-label mb-6 block">Selected Projects</span>
+            <h2 className="heading-section text-4xl md:text-5xl lg:text-7xl leading-[0.95] tracking-tighter">
               Case Studies
             </h2>
           </div>
           <Link
             href="/work"
-            className="group flex items-center gap-2 text-sm text-[var(--accent-teal-light)] font-[family-name:var(--font-body)] hover:gap-3 transition-all duration-300"
+            className="group flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-[var(--accent-teal-light)] hover:text-white transition-all duration-500"
           >
-            View All Projects
-            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+            All Work
+            <div className="w-12 h-[1px] bg-[var(--accent-teal-light)] group-hover:w-16 group-hover:bg-white transition-all duration-500" />
           </Link>
         </motion.div>
 
-        {/* Asymmetric Grid */}
-        <motion.div
-          ref={ref}
-          variants={staggerContainer}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6"
-        >
-          {projects.map((project, i) => (
-            <motion.div
-              key={project.id}
-              variants={fadeInUp}
-              className={i === 0 ? "md:row-span-2" : ""}
-            >
-              <Link href={`/work/${project.slug}`} className="block group">
-                <div
-                  className={`relative overflow-hidden rounded-2xl bg-[var(--bg-surface)] ${
-                    i === 0 ? "min-h-[400px] md:h-full" : "h-[250px] md:h-[280px]"
-                  }`}
-                >
-                  {/* Thumbnail Image */}
+        {/* Asymmetric Premium Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8">
+          {projects.map((project, i) => {
+            const isLarge = i === 0;
+            const gridClass = isLarge 
+              ? "md:col-span-12 lg:col-span-8 md:h-[600px]" 
+              : i === 1 
+                ? "md:col-span-6 lg:col-span-4 md:h-[450px] lg:h-[600px]"
+                : "md:col-span-6 lg:col-span-6 md:h-[450px]";
+
+            return (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-10%" }}
+                transition={{ duration: 1.2, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                className={gridClass}
+              >
+                <Link href={`/work/${project.slug}`} className="group relative block h-full w-full overflow-hidden rounded-2xl bg-[var(--bg-surface)]">
+                  {/* Background Layer (Matte Teal Fallback) */}
                   {project.thumbnail_url ? (
                     <img
                       src={project.thumbnail_url}
                       alt={project.title}
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                     />
                   ) : (
-                    <div className="absolute inset-0 bg-gradient-to-br from-[var(--bg-elevated)] to-[var(--bg-surface)]" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-[var(--bg-elevated)] to-[var(--bg-surface)]">
+                      <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(circle_at_center,var(--accent-teal-light)_1px,transparent_1px)] [background-size:24px_24px]" />
+                    </div>
                   )}
 
-                  {/* Logo watermark */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-700 pointer-events-none p-12">
-                    <img 
-                      src="/logo5.svg" 
-                      alt="Watermark" 
-                      className="w-full h-full object-contain grayscale invert" 
-                    />
+                  {/* Brand Watermark (Sophisticated opacity) */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-[0.04] group-hover:opacity-[0.08] transition-opacity duration-1000 pointer-events-none p-24">
+                    <img src="/logo5.svg" alt="" className="w-full h-full object-contain grayscale invert" />
                   </div>
 
-                  {/* Content overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-deep)]/90 via-[var(--bg-deep)]/20 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <span className="text-label text-[10px] uppercase tracking-widest">{project.category}</span>
-                    <h3 className="heading-section text-xl md:text-2xl mt-2 group-hover:text-[var(--accent-teal-light)] transition-colors">
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent pt-32" />
+
+                  {/* Content Overlay */}
+                  <div className="absolute inset-x-0 bottom-0 p-8 md:p-12 transition-transform duration-700 group-hover:-translate-y-2">
+                    <span className="text-[10px] md:text-xs uppercase tracking-[0.4em] text-[var(--accent-teal-light)] font-medium mb-3 block">
+                      {project.category}
+                    </span>
+                    <h3 className="heading-section text-2xl md:text-3xl lg:text-4xl !text-white leading-snug max-w-2xl group-hover:text-[var(--accent-teal-light)] transition-colors duration-500">
                       {project.title}
                     </h3>
                   </div>
 
-                  {/* Hover border */}
-                  <div className="absolute inset-0 rounded-2xl border border-transparent group-hover:border-[var(--border-accent)] transition-colors duration-500" />
-                </div>
-              </Link>
-            </motion.div>
-          ))}
-        </motion.div>
+                  {/* Reveal Indicator */}
+                  <div className="absolute top-8 right-8 opacity-0 group-hover:opacity-100 transition-all duration-700 -translate-x-4 group-hover:translate-x-0">
+                    <ArrowRight className="text-white" size={28} />
+                  </div>
+
+                  {/* Glass Border */}
+                  <div className="absolute inset-0 border border-white/5 group-hover:border-teal-500/20 transition-colors duration-700 rounded-2xl" />
+                  
+                  {/* Subtle Glow */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-1000 bg-[radial-gradient(circle_at_bottom_right,var(--accent-teal-glow),transparent_60%)]" />
+                </Link>
+              </motion.div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

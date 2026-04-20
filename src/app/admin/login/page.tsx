@@ -43,7 +43,7 @@ export default function AdminLoginPage() {
         initial={{ opacity: 0, y: 20, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.6, type: "spring", stiffness: 150 }}
-        className="w-full max-w-md"
+        className="w-full max-w-md relative z-[60] pointer-events-auto"
       >
         <GlassCard padding="lg" hover={false}>
           <div className="text-center mb-8">

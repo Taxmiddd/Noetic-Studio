@@ -53,3 +53,15 @@ export interface NavLink {
   label: string;
   href: string;
 }
+
+export type PolicyType = 'terms' | 'privacy';
+
+export interface Policy {
+  id: string;
+  type: PolicyType;
+  title: string;
+  content: string;
+  display_order: number;
+  created_at: string;
+  updated_at: string;
+}

@@ -12,13 +12,18 @@ import {
   Users,
   LogOut,
   ChevronLeft,
+  Layers,
+  FileText,
 } from "lucide-react";
+import { Toaster } from "react-hot-toast";
 
 const sidebarLinks = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/admin" },
   { icon: FolderKanban, label: "Projects", href: "/admin/projects" },
+  { icon: Layers, label: "Services", href: "/admin/services" },
   { icon: MessageSquare, label: "Inquiries", href: "/admin/inquiries" },
   { icon: Users, label: "Partners", href: "/admin/partners" },
+  { icon: FileText, label: "Policies", href: "/admin/policies" },
 ];
 
 export default function AdminLayout({
@@ -151,6 +156,21 @@ export default function AdminLayout({
       >
         <div className="p-6 md:p-8">{children}</div>
       </main>
+
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          style: {
+            background: "var(--bg-surface)",
+            color: "var(--text-bone)",
+            border: "1px solid var(--border-glass)",
+            fontFamily: "var(--font-body)",
+            fontSize: "13px",
+          },
+          success: { iconTheme: { primary: "#14B8A6", secondary: "#040D0C" } },
+          error: { iconTheme: { primary: "#f87171", secondary: "#040D0C" } },
+        }}
+      />
     </div>
   );
 }

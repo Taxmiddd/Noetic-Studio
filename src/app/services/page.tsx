@@ -2,7 +2,6 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { GlassCard } from "@/components/ui/GlassCard";
 import { staggerContainer, fadeInUp } from "@/lib/animations";
 import {
   Palette,
@@ -78,44 +77,48 @@ export default function ServicesPage() {
       </section>
 
       {/* Services List */}
-      <section className="section-padding pt-0 pb-20">
+      <section className="section-padding pt-0 pb-24">
         <motion.div
           ref={ref}
           variants={staggerContainer}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className="max-w-5xl mx-auto space-y-8"
+          className="max-w-7xl mx-auto divide-y divide-[var(--border-subtle)]"
         >
           {services.map((service, i) => {
             const Icon = service.icon;
-            const isEven = i % 2 === 0;
             return (
-              <motion.div key={service.title} variants={fadeInUp}>
-                <GlassCard padding="lg" className="group">
-                  <div className={`flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} gap-8 items-start`}>
-                    {/* Icon + Title */}
-                    <div className="flex-shrink-0">
-                      <div className="w-16 h-16 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] flex items-center justify-center group-hover:border-[var(--border-accent)] transition-colors duration-300 mb-4">
-                        <Icon
-                          size={28}
-                          className="text-[var(--accent-teal-light)]"
-                        />
-                      </div>
-                      <h2 className="heading-section text-xl md:text-2xl mb-2">
-                        {service.title}
-                      </h2>
-                      <p className="text-body text-sm font-medium text-[var(--accent-teal-light)]">
-                        {service.description}
-                      </p>
-                    </div>
-                    {/* Details */}
-                    <div className="flex-1">
-                      <p className="text-body text-sm leading-relaxed">
-                        {service.details}
-                      </p>
-                    </div>
+              <motion.div
+                key={service.title}
+                variants={fadeInUp}
+                className="group grid grid-cols-[64px_1fr] md:grid-cols-[80px_1fr_1.4fr] gap-6 md:gap-12 py-10 items-start"
+              >
+                {/* Left: index + icon */}
+                <div className="flex flex-col items-center gap-4 pt-1">
+                  <span className="text-[10px] text-label opacity-40 tabular-nums">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <div className="w-10 h-10 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] flex items-center justify-center group-hover:border-[var(--border-accent)] transition-colors duration-300">
+                    <Icon size={18} className="text-[var(--accent-teal-light)]" />
                   </div>
-                </GlassCard>
+                </div>
+
+                {/* Middle: title + short desc */}
+                <div className="pt-1">
+                  <h2 className="heading-section text-lg md:text-xl mb-3 leading-tight">
+                    {service.title}
+                  </h2>
+                  <p className="text-body text-sm text-[var(--accent-teal-light)] leading-relaxed">
+                    {service.description}
+                  </p>
+                </div>
+
+                {/* Right: long description — hidden on mobile */}
+                <div className="hidden md:block pt-1">
+                  <p className="text-body text-sm leading-relaxed opacity-70">
+                    {service.details}
+                  </p>
+                </div>
               </motion.div>
             );
           })}

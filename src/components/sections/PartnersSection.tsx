@@ -11,7 +11,12 @@ interface Partner {
 
 export function PartnersSection() {
   const [partners, setPartners] = useState<Partner[]>([]);
+  const [mounted, setMounted] = useState(false);
   const supabase = createClient();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     // Only attempt fetch if environment variables are present
@@ -41,7 +46,7 @@ export function PartnersSection() {
     ? [...partners, ...partners, ...partners, ...partners] 
     : [];
 
-  if (partners.length === 0) return null;
+  if (!mounted || partners.length === 0) return null;
 
   return (
     <section className="bg-[var(--bg-deep)] py-12 border-y border-[var(--border-subtle)] overflow-hidden">

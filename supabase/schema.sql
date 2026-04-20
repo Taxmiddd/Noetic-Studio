@@ -145,3 +145,51 @@ INSERT INTO partners (name, display_order) VALUES
   ('AETHER', 6),
   ('LUMINAR', 7),
   ('ZENITH', 8);
+
+-- =========================================
+-- Legal Policies
+-- =========================================
+CREATE TABLE policies (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  type TEXT NOT NULL CHECK (type IN ('terms', 'privacy')),
+  title TEXT NOT NULL,
+  content TEXT NOT NULL,
+  display_order INTEGER DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- RLS
+ALTER TABLE policies ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Public can view policies" ON policies
+  FOR SELECT USING (true);
+
+CREATE POLICY "Admin full access policies" ON policies
+  FOR ALL USING (auth.role() = 'authenticated');
+
+-- Indexes
+CREATE INDEX idx_policies_type ON policies(type);
+
+-- Trigger
+CREATE TRIGGER policies_updated_at
+  BEFORE UPDATE ON policies
+  FOR EACH ROW
+  EXECUTE FUNCTION update_updated_at();
+
+-- Seed Policies
+INSERT INTO policies (type, title, content, display_order) VALUES
+  ('terms', 'Scope & Deliverables', 'NOÉTIC Studio provides comprehensive creative and technical solutions across Brand Identity, UI/UX, Component Ecosystems, and Strategic Direction. The exact parameters, deliverables, and operational requirements of your initiative will be defined exclusively within your customized Project Specification Document prior to commencement.', 1),
+  ('terms', 'Timelines & Execution', 'Project deployment timelines and iterations commence officially on the date the initial deposit clears. We operate on algorithmic efficiency, but timelines remain strictly subject to adjustments based on the cadence of Client feedback, asset provisioning, and predetermined milestone approvals.', 2),
+  ('terms', 'Intellectual Property & Licensing', 'Upon settlement of the final invoice, the Client assumes full ownership of all finalized, front-facing branding, visual assets, and agreed deliverables. NOÉTIC Studio retains proprietary rights to our underlying operational frameworks, native code engines, or generative tools used to construct the product, as well as the irrevocable right to showcase the finalized project within our public portfolios.', 3),
+  ('terms', 'Deposits & Financials', 'Preliminary project deposits are strictly non-refundable, as they are instantly deployed toward resource allocation, strategic blueprinting, and necessary commercial asset acquisition (typography licenses, environmental setups, etc). The aggregate final balance is contractually due prior to the final handover of source files, brand guidelines, or live production environments.', 4),
+  ('terms', 'Revisions & Scope Guardrails', 'To maintain project velocity and structural integrity, we require revision requests to be submitted in organized batches at predetermined milestones. Ad-hoc, unstructured revisions, or retroactive structural deviations outside the agreed Scope of Work are subject to a scope-adjustment consultation and subsequent billing.', 5),
+  ('terms', 'Asset Archiving & Transfer', 'Following the final project handover, NOÉTIC Studio is under no inherent obligation to maintain archives of raw source files or preliminary concepts unless explicitly established in an ongoing Management Agreement. Clients are expected to securely archive their finalized deliverables upon receipt.', 6),
+  ('terms', 'Absolute Confidentiality', 'All operational workflows, architectural models, and proprietary business data disclosed to NOÉTIC Studio during the discovery and blueprinting sequence remain under strict confidentiality protocols. We act as an extension of your team and will never syndicate or leverage your internal data.', 7),
+  
+  ('privacy', 'Data Collection & Analytics', 'When you interact with NOÉTIC Studio, we may collect identifiable information such as your organizational details, direct contact vectors, and operational requirements. This data is sequestered exclusively for the purpose of formulating accurate project scopes, returning inquiries, and delivering high-fidelity creative solutions. We deploy minimal, non-invasive analytics strictly to measure our own platform''s structural performance.', 1),
+  ('privacy', 'Utilization of Internal Intelligence', 'Any proprietary information, architectural diagrams, or internal business metrics shared during our discovery and blueprinting phases are treated as highly classified. We do not aggregate your data into macroscopic datasets, and we emphatically do not sell, rent, or syndicate client information to third-party data brokers.', 2),
+  ('privacy', 'Third-Party Infrastructure', 'Deploying our digital products occasionally necessitates interactions with third-party infrastructure (e.g., Supabase, Vercel, Stripe, or specialized APIs). These sub-processors are bound by stringent independent privacy shields. While we architect these integrations to minimize data leakage, client interactions with secondary infrastructures may fall under their respective terms of processing.', 3),
+  ('privacy', 'Asset Storage & Retention', 'Following the successful deployment and final handover of a project, the responsibility of data and asset ownership is transferred to the Client. NOÉTIC Studio may retain encrypted backups of source code engines or generative files for our own internal audits or potential future expansions, unless a strict data-destruction sequence is explicitly requested in writing.', 4),
+  ('privacy', 'Telemetry & Cookies', 'Our public-facing interface employs highly restricted telemetry frameworks. We use essential session tokens and strictly necessary functional cookies to preserve interface stability and security. We do not deploy aggressive third-party marketing pixels or cross-site tracking mechanics on our corporate website.', 5),
+  ('privacy', 'Your Data Rights', 'Under applicable digital jurisdictions, you retain the absolute right to request an audit of the data NOÉTIC Studio currently holds regarding your organization, prompt the correction of misaligned records, or invoke a right to erasure of your contact vectors from our CRM ecosystems.', 6);
