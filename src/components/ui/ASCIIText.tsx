@@ -268,7 +268,7 @@ class CanvAscii {
   render() {
     const time = Date.now() * 0.001;
     this.textCanvas.render(); this.texture.needsUpdate = true;
-    this.mesh.material.uniforms.uTime.value = Math.sin(time);
+    (this.mesh.material as THREE.ShaderMaterial).uniforms.uTime.value = Math.sin(time);
     this.mesh.rotation.x += (Math.map(this.mouse.y, 0, this.height, 0.5, -0.5) - this.mesh.rotation.x) * 0.05;
     this.mesh.rotation.y += (Math.map(this.mouse.x, 0, this.width, -0.5, 0.5) - this.mesh.rotation.y) * 0.05;
     this.filter.render(this.scene, this.camera);
