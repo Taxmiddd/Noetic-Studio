@@ -1,6 +1,9 @@
 import { NextResponse, type NextRequest } from 'next/server'
 
-export async function proxy(request: NextRequest) {
+export const runtime = 'experimental-edge';
+
+export async function middleware(request: NextRequest) {
+  // Standard Edge-compatible middleware
   return NextResponse.next({ request });
 }
 
