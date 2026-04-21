@@ -16,6 +16,7 @@ import {
   FileText,
 } from "lucide-react";
 import { Toaster } from "react-hot-toast";
+import { Analytics } from "@vercel/analytics/next";
 
 const sidebarLinks = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/admin" },
@@ -171,6 +172,7 @@ export default function AdminLayout({
           error: { iconTheme: { primary: "#f87171", secondary: "#040D0C" } },
         }}
       />
+      <Analytics />
     </div>
   );
 }
