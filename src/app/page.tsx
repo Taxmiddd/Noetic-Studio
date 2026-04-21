@@ -1,9 +1,11 @@
+import dynamic from "next/dynamic";
 import { HeroSection } from "@/components/hero/HeroSection";
-import { ServicesGrid } from "@/components/sections/ServicesGrid";
-import { PhilosophySection } from "@/components/sections/PhilosophySection";
-import { WorkShowcase } from "@/components/sections/WorkShowcase";
-import { PartnersSection } from "@/components/sections/PartnersSection";
-import { ContactCTA } from "@/components/sections/ContactCTA";
+
+const ServicesGrid = dynamic(() => import("@/components/sections/ServicesGrid").then(mod => mod.ServicesGrid));
+const PhilosophySection = dynamic(() => import("@/components/sections/PhilosophySection").then(mod => mod.PhilosophySection));
+const WorkShowcase = dynamic(() => import("@/components/sections/WorkShowcase").then(mod => mod.WorkShowcase));
+const PartnersSection = dynamic(() => import("@/components/sections/PartnersSection").then(mod => mod.PartnersSection));
+const ContactCTA = dynamic(() => import("@/components/sections/ContactCTA").then(mod => mod.ContactCTA));
 
 export default function HomePage() {
   return (

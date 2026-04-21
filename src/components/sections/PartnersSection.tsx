@@ -66,6 +66,7 @@ export function PartnersSection() {
             repeat: Infinity,
             ease: "linear",
           }}
+          style={{ willChange: "transform" }}
           className="flex whitespace-nowrap gap-16 md:gap-32 items-center"
         >
           {marqueePartners.map((partner, i) => (

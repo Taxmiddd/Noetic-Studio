@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import type { NavLink } from "@/types";
@@ -82,9 +83,11 @@ export function Navbar() {
                 whileTap={{ scale: 0.95 }}
                 className="flex items-center"
               >
-                <img 
+                <Image 
                   src="/logo5.svg" 
                   alt="NOÉTIC" 
+                  width={96} 
+                  height={32} 
                   className="h-6 md:h-8 w-auto invert-0 opacity-90 group-hover:opacity-100 transition-opacity" 
                 />
               </motion.div>

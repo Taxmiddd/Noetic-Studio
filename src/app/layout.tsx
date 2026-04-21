@@ -1,14 +1,16 @@
 export const runtime = "edge";
 
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import { Montserrat, Space_Grotesk, Playfair_Display } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
-import { MobileNav } from "@/components/layout/MobileNav";
 import { Footer } from "@/components/layout/Footer";
-import { SmoothScroll } from "@/components/ui/SmoothScroll";
-import { GlobalBackground } from "@/components/ui/GlobalBackground";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
+
+const SmoothScroll = dynamic(() => import("@/components/ui/SmoothScroll").then(mod => mod.SmoothScroll));
+const GlobalBackground = dynamic(() => import("@/components/ui/GlobalBackground").then(mod => mod.GlobalBackground));
+const MobileNav = dynamic(() => import("@/components/layout/MobileNav").then(mod => mod.MobileNav));
 
 const montserrat = Montserrat({
   variable: "--font-heading",
@@ -146,6 +148,10 @@ export default function RootLayout({
       lang="en"
       className={`${montserrat.variable} ${spaceGrotesk.variable} ${playfair.variable}`}
     >
+      <head>
+        <link rel="preconnect" href="https://eoxfhufkayryfzqtnjsp.supabase.co" />
+        <link rel="dns-prefetch" href="https://eoxfhufkayryfzqtnjsp.supabase.co" />
+      </head>
       <body className="bg-[var(--bg-deep)] text-[var(--text-bone)] antialiased">
         <script
           type="application/ld+json"

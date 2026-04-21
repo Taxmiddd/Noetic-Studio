@@ -2,9 +2,12 @@
 
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
+import dynamic from "next/dynamic";
+import Image from "next/image";
 import { AnimatedText } from "@/components/ui/AnimatedText";
 import { ChevronDown } from "lucide-react";
-import Aurora from "@/components/ui/Aurora";
+
+const Aurora = dynamic(() => import("@/components/ui/Aurora"), { ssr: false });
 
 export function HeroSection() {
   const ref = useRef<HTMLDivElement>(null);
@@ -55,7 +58,14 @@ export function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               className="mb-12"
             >
-              <img src="/logo7.svg" alt="NOÉTIC" className="h-12 w-auto brightness-200" />
+              <Image 
+                src="/logo7.svg" 
+                alt="NOÉTIC" 
+                width={120} 
+                height={24} 
+                className="h-12 w-auto brightness-200" 
+                priority
+              />
             </motion.div>
             
             <div className="w-48 h-[1px] bg-white/10 relative overflow-hidden">
@@ -102,10 +112,14 @@ export function HeroSection() {
           transition={{ duration: 1.2, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           className="mb-8 md:mb-12 flex items-center justify-center h-[200px] md:h-[320px]"
         >
-          <img 
+          <Image 
             src="/logo7.svg" 
             alt="NOÉTIC" 
+            width={800} 
+            height={320}
             className="h-full w-auto object-contain brightness-125"
+            priority
+            fetchPriority="high"
           />
         </motion.div>
 

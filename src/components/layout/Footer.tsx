@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const navLinks = [
   { label: "Work", href: "/work" },
@@ -39,7 +40,13 @@ export function Footer() {
           {/* Col 1: Brand */}
           <div className="col-span-2 md:col-span-1 flex flex-col justify-between gap-8">
             <div>
-              <img src="/logo5.svg" alt="NOÉTIC" className="h-6 w-auto brightness-[0.6] mb-4" />
+              <Image 
+                src="/logo5.svg" 
+                alt="NOÉTIC" 
+                width={24} 
+                height={24} 
+                className="h-6 w-auto brightness-[0.6] mb-4" 
+              />
               <p className="text-[10px] uppercase tracking-[0.4em] text-white/25 font-[family-name:var(--font-body)] leading-relaxed">
                 Clarity.<br />Mandated.
               </p>
