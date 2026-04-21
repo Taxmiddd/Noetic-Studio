@@ -7,6 +7,7 @@ import { MobileNav } from "@/components/layout/MobileNav";
 import { Footer } from "@/components/layout/Footer";
 import { SmoothScroll } from "@/components/ui/SmoothScroll";
 import { GlobalBackground } from "@/components/ui/GlobalBackground";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -158,6 +159,7 @@ export default function RootLayout({
           <Footer />
           <MobileNav />
         </SmoothScroll>
+        <SpeedInsights />
       </body>
     </html>
   );
