@@ -2,6 +2,9 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  experimental: {
+    optimizePackageImports: ["framer-motion", "lucide-react", "three", "ogl", "gsap"],
+  },
   images: {
     remotePatterns: [
       {

@@ -89,6 +89,8 @@ export function Navbar() {
                   width={96} 
                   height={32} 
                   className="h-6 md:h-8 w-auto invert-0 opacity-90 group-hover:opacity-100 transition-opacity" 
+                  priority
+                  fetchPriority="high"
                 />
               </motion.div>
             </Link>

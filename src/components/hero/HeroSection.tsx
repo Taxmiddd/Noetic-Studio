@@ -1,88 +1,19 @@
 "use client";
 
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { AnimatedText } from "@/components/ui/AnimatedText";
-import { ChevronDown } from "lucide-react";
 
 const Aurora = dynamic(() => import("@/components/ui/Aurora"), { ssr: false });
 
 export function HeroSection() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [loading, setLoading] = useState(true);
-  const [progress, setProgress] = useState(0);
-
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
-  const y = useTransform(scrollYProgress, [0, 0.5], [0, 100]);
-
-  // Loading animation logic
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(timer);
-          setTimeout(() => setLoading(false), 500);
-          return 100;
-        }
-        return prev + 1.5;
-      });
-    }, 20);
-    return () => clearInterval(timer);
-  }, []);
 
   return (
     <section
-      ref={ref}
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[var(--bg-deep)]"
       id="hero"
     >
       <div className="absolute inset-0 dot-grid opacity-[0.03] z-0 pointer-events-none" />
-      <AnimatePresence>
-        {loading ? (
-          <motion.div
-            key="loader"
-            exit={{ opacity: 0, scale: 1.1 }}
-            transition={{ duration: 0.8, ease: [0.43, 0.13, 0.23, 0.96] }}
-            className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black"
-          >
-            <motion.div 
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mb-12"
-            >
-              <Image 
-                src="/logo7.svg" 
-                alt="NOÉTIC" 
-                width={120} 
-                height={24} 
-                className="h-12 w-auto brightness-200" 
-                priority
-              />
-            </motion.div>
-            
-            <div className="w-48 h-[1px] bg-white/10 relative overflow-hidden">
-              <motion.div 
-                className="absolute inset-y-0 left-0 bg-white"
-                style={{ width: `${progress}%` }}
-              />
-            </div>
-            
-            <motion.span 
-              className="mt-4 text-[10px] tracking-[0.3em] text-white/40 uppercase font-[family-name:var(--font-body)]"
-            >
-              Initializing Studio
-            </motion.span>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
 
       {/* Aurora Background */}
       <div className="absolute inset-0 z-0">
@@ -102,7 +33,6 @@ export function HeroSection() {
       />
 
       <motion.div
-        style={{ opacity, scale, y }}
         className="relative z-10 flex flex-col items-center text-center px-6"
       >
         {/* Brand Wordmark (Static and Powerful) */}

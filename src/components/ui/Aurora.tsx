@@ -179,8 +179,18 @@ export default function Aurora(props: AuroraProps) {
     ctn.appendChild(gl.canvas);
 
     let animateId = 0;
+    let lastTime = 0;
+    const fpsInterval = 1000 / 30;
+
     const update = (t: number) => {
       animateId = requestAnimationFrame(update);
+      
+      if (document.hidden) return;
+      
+      const elapsed = t - lastTime;
+      if (elapsed < fpsInterval) return;
+      lastTime = t - (elapsed % fpsInterval);
+
       const { time = t * 0.01, speed = 1.0 } = propsRef.current;
       program.uniforms.uTime.value = time * speed * 0.1;
       program.uniforms.uAmplitude.value = propsRef.current.amplitude ?? 1.0;

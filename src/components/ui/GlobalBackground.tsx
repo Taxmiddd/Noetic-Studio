@@ -1,18 +1,35 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import DotField from "./DotField";
+import dynamic from "next/dynamic";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
+// Lazily import DotField — keeps it out of the initial JS parse
+const DotField = dynamic(() => import("./DotField"), { ssr: false });
+
 export function GlobalBackground() {
   const pathname = usePathname();
-  const [showDots, setShowDots] = useState(true);
+  const [showDots, setShowDots] = useState(false); // start hidden — show after idle
+  const [ready, setReady] = useState(false);
+
+  // Defer DotField mount until after first paint + idle
+  useEffect(() => {
+    const mount = () => setReady(true);
+    if ("requestIdleCallback" in window) {
+      const id = (window as any).requestIdleCallback(mount, { timeout: 2000 });
+      return () => (window as any).cancelIdleCallback(id);
+    } else {
+      const t = setTimeout(mount, 500);
+      return () => clearTimeout(t);
+    }
+  }, []);
 
   useEffect(() => {
+    if (!ready) return;
+
     if (pathname === "/") {
       const handleScroll = () => {
-        // Show dots after 80vh of scrolling (end of hero)
         setShowDots(window.scrollY > window.innerHeight * 0.8);
       };
       window.addEventListener("scroll", handleScroll, { passive: true });
@@ -21,7 +38,7 @@ export function GlobalBackground() {
     } else {
       setShowDots(true);
     }
-  }, [pathname]);
+  }, [pathname, ready]);
 
   // Page variants
   let config = {
@@ -33,17 +50,15 @@ export function GlobalBackground() {
   };
 
   if (pathname === "/about") {
-    config = {
-      ...config,
-      opacity: 0.2, // More subtle on About
-      dotSpacing: 25,
-    };
+    config = { ...config, opacity: 0.2, dotSpacing: 25 };
   } else if (pathname === "/services") {
-    config = {
-      ...config,
-      opacity: 0.5, // Slightly stronger on Services
-    };
-  } else if (pathname === "/privacy" || pathname === "/terms") {
+    config = { ...config, opacity: 0.5 };
+  } else if (
+    pathname === "/privacy" ||
+    pathname === "/terms" ||
+    pathname === "/refund" ||
+    pathname === "/pricing"
+  ) {
     config = {
       ...config,
       opacity: 0.15,
@@ -52,6 +67,8 @@ export function GlobalBackground() {
       glowColor: "rgba(255, 255, 255, 0.05)",
     };
   }
+
+  if (!ready) return null;
 
   return (
     <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">

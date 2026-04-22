@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
-import { HeroSection } from "@/components/hero/HeroSection";
 
+const HeroSection = dynamic(() => import("@/components/hero/HeroSection").then(mod => mod.HeroSection));
 const ServicesGrid = dynamic(() => import("@/components/sections/ServicesGrid").then(mod => mod.ServicesGrid));
 const PhilosophySection = dynamic(() => import("@/components/sections/PhilosophySection").then(mod => mod.PhilosophySection));
 const WorkShowcase = dynamic(() => import("@/components/sections/WorkShowcase").then(mod => mod.WorkShowcase));

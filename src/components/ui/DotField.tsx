@@ -111,8 +111,18 @@ const DotField = memo(({
     const speedInterval = setInterval(updateMouseSpeed, 20);
 
     let frameCount = 0;
+    let lastTime = 0;
+    const fpsInterval = 1000 / 30; // Throttle to 30fps to save main thread
 
-    function tick() {
+    function tick(time: number) {
+      rafRef.current = requestAnimationFrame(tick);
+      
+      if (document.hidden) return;
+      
+      const elapsed = time - lastTime;
+      if (elapsed < fpsInterval) return;
+      lastTime = time - (elapsed % fpsInterval);
+
       frameCount++;
       const dots = dotsRef.current;
       const m = mouseRef.current;
@@ -206,8 +216,6 @@ const DotField = memo(({
       }
 
       ctx!.fill();
-
-      rafRef.current = requestAnimationFrame(tick);
     }
 
     doResize();
