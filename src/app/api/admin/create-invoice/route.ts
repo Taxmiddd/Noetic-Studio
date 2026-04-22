@@ -116,7 +116,18 @@ export async function POST(request: Request) {
     if (!lsResponse.ok) {
       const lsError = await lsResponse.text();
       console.error('Lemon Squeezy API Error:', lsError);
-      return NextResponse.json({ error: 'Failed to create Lemon Squeezy checkout' }, { status: 500 });
+      
+      let errorMsg = 'Failed to create Lemon Squeezy checkout';
+      try {
+        const parsed = JSON.parse(lsError);
+        if (parsed.errors && parsed.errors.length > 0) {
+          errorMsg = parsed.errors[0].detail || parsed.errors[0].title;
+        }
+      } catch (e) {
+        errorMsg = lsError;
+      }
+      
+      return NextResponse.json({ error: errorMsg }, { status: 500 });
     }
 
     const lsData = await lsResponse.json();
