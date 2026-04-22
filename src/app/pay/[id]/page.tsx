@@ -48,12 +48,12 @@ export default async function InvoicePage({ params }: PageProps) {
   const isPaid = invoice.status === "paid";
 
   return (
-    <div className="pt-[var(--nav-height)] pb-24 relative overflow-hidden min-h-screen bg-[var(--bg-base)] text-[var(--text-bone)]">
+    <div className="relative overflow-hidden h-screen bg-[var(--bg-base)] text-[var(--text-bone)] flex flex-col justify-center">
       {/* Background elements */}
       <div className="absolute top-0 inset-x-0 h-[500px] bg-gradient-to-b from-[var(--accent-teal)]/10 to-transparent pointer-events-none" />
       <div className="absolute top-1/2 left-1/2 w-[600px] h-[600px] bg-[var(--accent-teal-glow)] rounded-full blur-[150px] opacity-20 -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
 
-      <section className="section-padding relative z-10 flex items-center justify-center min-h-[70vh]">
+      <section className="px-6 relative z-10 flex items-center justify-center w-full">
         <div className="w-full max-w-lg">
           <GlassCard padding="lg" className="border-[var(--accent-teal)]/30 shadow-[0_0_50px_rgba(13,115,119,0.1)]">
             <div className="text-center mb-8">
