@@ -14,6 +14,7 @@ import {
   ChevronLeft,
   Layers,
   FileText,
+  CreditCard,
 } from "lucide-react";
 import { Toaster } from "react-hot-toast";
 import { Analytics } from "@vercel/analytics/next";
@@ -22,6 +23,7 @@ const sidebarLinks = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/admin" },
   { icon: FolderKanban, label: "Projects", href: "/admin/projects" },
   { icon: Layers, label: "Services", href: "/admin/services" },
+  { icon: CreditCard, label: "Payments", href: "/admin/payments" },
   { icon: MessageSquare, label: "Inquiries", href: "/admin/inquiries" },
   { icon: Users, label: "Partners", href: "/admin/partners" },
   { icon: FileText, label: "Policies", href: "/admin/policies" },

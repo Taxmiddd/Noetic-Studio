@@ -4,12 +4,13 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "clean": "rimraf .next .open-next .wrangler",
+    "clean": "rimraf .next",
     "dev": "next dev",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
+    "@react-pdf/renderer": "^4.5.1",
     "@react-three/fiber": "^9.6.0",
     "@react-three/postprocessing": "^3.0.4",
     "@supabase/ssr": "^0.10.0",

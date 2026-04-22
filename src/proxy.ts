@@ -1,6 +1,23 @@
 import { NextResponse, type NextRequest } from 'next/server'
 
-export default async function proxy() {
+export default async function proxy(request: NextRequest) {
+  const url = request.nextUrl;
+  const hostname = request.headers.get('host') || '';
+
+  // Check if the request is coming from the payment subdomain
+  if (hostname.startsWith('pay.')) {
+    // If accessing the root of the subdomain, maybe redirect or return 404
+    if (url.pathname === '/') {
+      return new NextResponse('Invoice ID required', { status: 400 });
+    }
+
+    // Rewrite pay.noeticstudio.net/123 to /pay/123
+    // But avoid rewriting if it's already going to /pay
+    if (!url.pathname.startsWith('/pay/')) {
+      return NextResponse.rewrite(new URL(`/pay${url.pathname}`, request.url));
+    }
+  }
+
   return NextResponse.next();
 }
 

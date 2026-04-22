@@ -114,6 +114,12 @@ export default function AdminDashboard() {
       description: "In marquee",
       onClick: () => router.push("/admin/partners"),
     },
+    {
+      label: "Payments",
+      title: "New",
+      description: "Generate Invoice",
+      onClick: () => router.push("/admin/payments"),
+    },
   ];
 
   return (
