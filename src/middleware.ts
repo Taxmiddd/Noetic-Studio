@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
   const url = request.nextUrl;
-  const hostname = request.headers.get('host') || '';
+  const hostname = url.hostname;
 
   // Check if the request is coming from the payment subdomain
   if (hostname.startsWith('pay.')) {

@@ -22,7 +22,7 @@ export default async function InvoicePage({ params }: PageProps) {
   // Validate UUID format
   const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   if (!uuidRegex.test(invoiceId)) {
-    notFound();
+    return <div>Debug Error: Invalid UUID format. Received: {invoiceId}</div>;
   }
 
   const { data: invoice, error } = await supabase
@@ -31,8 +31,12 @@ export default async function InvoicePage({ params }: PageProps) {
     .eq("id", invoiceId)
     .single();
 
-  if (error || !invoice) {
-    notFound();
+  if (error) {
+    return <div>Debug DB Error: {JSON.stringify(error)}</div>;
+  }
+
+  if (!invoice) {
+    return <div>Debug Error: Invoice not found in database for ID: {invoiceId}</div>;
   }
 
   // Currency formatting
