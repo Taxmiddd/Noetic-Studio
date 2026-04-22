@@ -11,13 +11,13 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 interface PageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default async function InvoicePage({ params }: PageProps) {
-  const invoiceId = params.id;
+  const { id: invoiceId } = await params;
 
   if (!invoiceId) {
     return <div>Debug Error: No ID provided.</div>;
