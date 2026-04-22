@@ -3,6 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 import Link from "next/link";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Button } from "@/components/ui/Button";
+import Script from "next/script";
 
 // We use the admin client here to fetch the invoice safely via server component
 // without needing the user to be logged in, since this is a public link.
@@ -113,11 +114,14 @@ export default async function InvoicePage({ params }: PageProps) {
                     Payment Completed
                   </Button>
                 ) : (
-                  <Link href={invoice.checkout_url || "#"} className="block w-full">
-                    <Button variant="primary" className="w-full justify-center text-sm py-4 shadow-[0_0_20px_rgba(13,115,119,0.4)]">
-                      Proceed to Payment
-                    </Button>
-                  </Link>
+                  <>
+                    <Script src="https://app.lemonsqueezy.com/js/lemon.js" strategy="lazyOnload" />
+                    <a href={invoice.checkout_url || "#"} className="lemonsqueezy-button block w-full">
+                      <Button variant="primary" className="w-full justify-center text-sm py-4 shadow-[0_0_20px_rgba(13,115,119,0.4)] pointer-events-none">
+                        Proceed to Payment
+                      </Button>
+                    </a>
+                  </>
                 )}
               </div>
               

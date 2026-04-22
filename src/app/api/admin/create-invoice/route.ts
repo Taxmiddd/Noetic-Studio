@@ -84,7 +84,7 @@ export async function POST(request: Request) {
           attributes: {
             custom_price: amountInCents,
             checkout_options: {
-              embed: false,
+              embed: true,
               media: true,
               logo: true,
               desc: true,
