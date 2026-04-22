@@ -4,6 +4,7 @@ import Link from "next/link";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Button } from "@/components/ui/Button";
 import Script from "next/script";
+export const dynamic = "force-dynamic";
 
 // We use the admin client here to fetch the invoice safely via server component
 // without needing the user to be logged in, since this is a public link.
