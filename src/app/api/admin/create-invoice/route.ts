@@ -85,9 +85,9 @@ export async function POST(request: Request) {
             custom_price: amountInCents,
             checkout_options: {
               embed: true,
-              media: true,
-              logo: true,
-              desc: true,
+              media: false,
+              logo: false,
+              desc: false,
               dark: true,
               button_color: '#0D7377',
             },

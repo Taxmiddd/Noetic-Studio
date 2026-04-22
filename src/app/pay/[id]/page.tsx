@@ -116,33 +116,11 @@ export default async function InvoicePage({ params }: PageProps) {
                 ) : (
                   <>
                     <Script src="https://app.lemonsqueezy.com/js/lemon.js" strategy="beforeInteractive" />
-                    {(() => {
-                      try {
-                        const checkoutUrl = new URL(invoice.checkout_url || "");
-                        checkoutUrl.searchParams.set('embed', '1');
-                        checkoutUrl.searchParams.set('dark', '1');
-                        checkoutUrl.searchParams.set('button_color', '#0D7377');
-                        checkoutUrl.searchParams.set('logo', '0');
-                        checkoutUrl.searchParams.set('desc', '0');
-                        checkoutUrl.searchParams.set('media', '0');
-                        
-                        return (
-                          <a href={checkoutUrl.toString()} className="lemonsqueezy-button block w-full">
-                            <Button variant="primary" className="w-full justify-center text-sm py-4 shadow-[0_0_20px_rgba(13,115,119,0.4)] pointer-events-none">
-                              Proceed to Payment
-                            </Button>
-                          </a>
-                        );
-                      } catch (e) {
-                        return (
-                          <a href="#" className="block w-full">
-                            <Button variant="primary" className="w-full justify-center text-sm py-4 shadow-[0_0_20px_rgba(13,115,119,0.4)] pointer-events-none">
-                              Invalid Checkout Link
-                            </Button>
-                          </a>
-                        );
-                      }
-                    })()}
+                    <a href={invoice.checkout_url || "#"} className="lemonsqueezy-button block w-full">
+                      <Button variant="primary" className="w-full justify-center text-sm py-4 shadow-[0_0_20px_rgba(13,115,119,0.4)] pointer-events-none">
+                        Proceed to Payment
+                      </Button>
+                    </a>
                   </>
                 )}
               </div>
