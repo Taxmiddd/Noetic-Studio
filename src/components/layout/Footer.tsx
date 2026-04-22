@@ -21,6 +21,8 @@ const socialLinks = [
 const legalLinks = [
   { label: "Privacy", href: "/privacy" },
   { label: "Terms", href: "/terms" },
+  { label: "Refund Policy", href: "/refund" },
+  { label: "Pricing", href: "/pricing" },
 ];
 
 export function Footer() {
