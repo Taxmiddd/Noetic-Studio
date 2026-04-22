@@ -115,8 +115,8 @@ export default async function InvoicePage({ params }: PageProps) {
                   </Button>
                 ) : (
                   <>
-                    <Script src="https://app.lemonsqueezy.com/js/lemon.js" strategy="lazyOnload" />
-                    <a href={invoice.checkout_url || "#"} className="lemonsqueezy-button block w-full">
+                    <Script src="https://app.lemonsqueezy.com/js/lemon.js" strategy="beforeInteractive" />
+                    <a href={invoice.checkout_url?.includes('?') ? `${invoice.checkout_url}&embed=1` : `${invoice.checkout_url}?embed=1`} className="lemonsqueezy-button block w-full">
                       <Button variant="primary" className="w-full justify-center text-sm py-4 shadow-[0_0_20px_rgba(13,115,119,0.4)] pointer-events-none">
                         Proceed to Payment
                       </Button>
