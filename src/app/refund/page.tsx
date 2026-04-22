@@ -31,30 +31,20 @@ Payment for each milestone is due upon completion of the preceding phase and pri
   {
     article: "03",
     title: "Initial Deposit & Non-Refundable Commitment",
-    content: `All projects require an initial deposit ("Engagement Fee") before work commences. This deposit typically ranges from 30% to 50% of the total project investment, as specified in your proposal.
+    content: `All projects require an initial deposit ("Engagement Fee") before work commences. This deposit is set at a minimum of 50% of the total project investment, as specified in your proposal.
 
-The Engagement Fee is strictly non-refundable once the project has been formally initiated, as it covers:
-• Strategic discovery and research undertaken on behalf of the Client
-• Resource allocation and team scheduling
-• Initial concept development and ideation
-• Administrative and operational setup costs
-
-The Engagement Fee becomes non-refundable upon formal project commencement, defined as the scheduled kick-off date or the date the Agency begins active work — whichever occurs first.`,
+The Engagement Fee is strictly non-refundable once the project has been formally initiated, as it covers strategic discovery, resource allocation, and initial concept development.`,
   },
   {
     article: "04",
     title: "Project Cancellation by the Client",
     content: `In the event that the Client elects to cancel a project after work has commenced, the following terms apply:
 
-a) The Client will be invoiced for all completed milestones up to the date of cancellation, including any milestone that is in active progress.
+a) The Client will be invoiced for all completed milestones up to the date of cancellation.
 
-b) For milestones currently in progress at the time of cancellation, the Client will be billed for work completed pro-rata, calculated at the Agency's standard hourly rate or as a proportional percentage of the milestone value — at the Agency's discretion.
+b) Pro-rata billing: For work completed during the execution of an active milestone, the Client will be billed for hours/effort consumed up to the moment of cancellation.
 
-c) Any unused portion of prepaid milestone fees (for milestones not yet commenced) will be refunded within thirty (30) business days of the cancellation notice.
-
-d) Cancellation must be communicated in writing via email to contact@noeticstudio.net. Verbal cancellation requests are not binding.
-
-e) Upon cancellation, the Client receives ownership rights only to deliverables from fully paid and completed milestones. Work-in-progress from incomplete milestones remains the intellectual property of NOÉTIC Studio.`,
+c) Zero refunds on delivery: Once final source assets, code, or deliverables have been transferred, no refunds of any kind will be issued.`,
   },
   {
     article: "05",

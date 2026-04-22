@@ -12,7 +12,7 @@ const termsSections = [
     title: "Definitions & Interpretation",
     content: `In these Terms of Service ("Terms"), the following definitions apply:
 
-"Agency" or "NOÉTIC Studio" refers to NOÉTIC Studio, a creative and digital services agency registered and operating in Bangladesh.
+"Agency" or "NOÉTIC Studio" refers to NOÉTIC Studio, a brand name owned and operated by Meraj Hossain, a registered sole proprietorship in Dhaka, Bangladesh.
 
 "Client" or "You" refers to any individual, company, or organization engaging NOÉTIC Studio for services.
 
@@ -22,7 +22,7 @@ const termsSections = [
 
 "Proposal" or "Project Agreement" refers to the custom scope of work, timeline, and investment breakdown provided to the Client prior to engagement.
 
-"Merchant of Record" refers to Paddle.com, our designated payment processor responsible for handling all financial transactions on behalf of the Agency.`,
+"Merchant of Record" refers to Paddle.com, our designated payment processor responsible for handling all global financial transactions on behalf of the Agency. All global payments are securely processed via Paddle.com, our designated Merchant of Record.`,
   },
   {
     article: "02",
@@ -82,7 +82,7 @@ d) Third-Party Assets: If the Deliverables incorporate licensed third-party asse
   {
     article: "06",
     title: "Payment Terms & Merchant of Record",
-    content: `All payments for NOÉTIC Studio services are processed through Paddle.com ("Paddle"), which acts as our Merchant of Record.
+    content: `"All global payments are securely processed via Paddle.com, our designated Merchant of Record." All payments for NOÉTIC Studio services are processed through Paddle.com ("Paddle"), which acts as our Merchant of Record.
 
 By submitting payment, the Client is transacting with Paddle, which handles:
 • Secure payment processing (credit/debit cards, PayPal, and regional methods)

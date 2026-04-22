@@ -72,8 +72,8 @@ We will never sell, rent, or trade your personal data to third parties for their
   {
     section: "04",
     title: "Payment Data & Paddle",
-    content: `All payments for NOÉTIC Studio services are processed through Paddle.com ("Paddle"), which acts as our Merchant of Record.
-
+    content: `"Financial transactions are managed by Paddle.com. They act as the Merchant of Record, ensuring PCI-DSS compliant handling of payment data and managing billing-related customer inquiries." All payments for NOÉTIC Studio services are processed through Paddle.com ("Paddle"), which acts as our Merchant of Record.
+    
 When you make a payment:
 • Your payment information (credit/debit card details, PayPal credentials, or other payment methods) is collected and processed exclusively by Paddle
 • NOÉTIC Studio does NOT store, access, or process your payment card details

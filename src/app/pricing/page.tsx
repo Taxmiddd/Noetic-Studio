@@ -81,11 +81,17 @@ export default function PricingPage() {
               is architected around your brand's unique strategic requirements — because
               generic solutions produce generic results.
             </p>
-            <p className="text-body text-base max-w-xl mx-auto">
+            <p className="text-body text-base max-w-xl mx-auto mb-6">
               Our work is deeply consultative. Rather than fitting your vision into a
               predefined tier, we design a scope, timeline, and investment structure
               that is precisely calibrated to what your brand needs to achieve.
             </p>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--bg-elevated)] border border-[var(--accent-teal)]/30">
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-teal-light)] animate-pulse" />
+              <span className="text-[10px] md:text-xs uppercase tracking-widest text-[var(--text-bone-muted)] font-[family-name:var(--font-body)]">
+                Bespoke project engagements start at a minimum fee of <span className="text-[var(--accent-teal-light)] font-bold">$100 USD</span>
+              </span>
+            </div>
           </motion.div>
 
           {/* ─── QUOTATION SYSTEM ─── */}
