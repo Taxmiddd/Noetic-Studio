@@ -19,10 +19,8 @@ interface PageProps {
 export default async function InvoicePage({ params }: PageProps) {
   const invoiceId = params.id;
 
-  // Validate UUID format
-  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-  if (!uuidRegex.test(invoiceId)) {
-    return <div>Debug Error: Invalid UUID format. Received: {invoiceId}</div>;
+  if (!invoiceId) {
+    return <div>Debug Error: No ID provided.</div>;
   }
 
   const { data: invoice, error } = await supabase
