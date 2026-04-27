@@ -15,18 +15,38 @@ import {
   Layers,
   FileText,
   CreditCard,
+  Plus,
 } from "lucide-react";
 import { Toaster } from "react-hot-toast";
 import { Analytics } from "@vercel/analytics/next";
 
-const sidebarLinks = [
-  { icon: LayoutDashboard, label: "Dashboard", href: "/admin" },
-  { icon: FolderKanban, label: "Projects", href: "/admin/projects" },
-  { icon: Layers, label: "Services", href: "/admin/services" },
-  { icon: CreditCard, label: "Payments", href: "/admin/payments" },
-  { icon: MessageSquare, label: "Inquiries", href: "/admin/inquiries" },
-  { icon: Users, label: "Partners", href: "/admin/partners" },
-  { icon: FileText, label: "Policies", href: "/admin/policies" },
+const sidebarGroups = [
+  {
+    title: "Overview",
+    links: [
+      { icon: LayoutDashboard, label: "Dashboard", href: "/admin" },
+      { icon: FolderKanban, label: "Projects", href: "/admin/projects" },
+      { icon: Layers, label: "Services", href: "/admin/services" },
+      { icon: FileText, label: "Invoices", href: "/admin/invoices" },
+      { icon: CreditCard, label: "Payments", href: "/admin/payments" },
+    ]
+  },
+  {
+    title: "Management",
+    links: [
+      { icon: MessageSquare, label: "Inquiries", href: "/admin/inquiries" },
+      { icon: Users, label: "Partners", href: "/admin/partners" },
+      { icon: FileText, label: "Policies", href: "/admin/policies" },
+    ]
+  },
+  {
+    title: "Quick Actions",
+    links: [
+      { icon: Plus, label: "Create Invoice", href: "/admin/invoices?view=create" },
+      { icon: Plus, label: "New Project", href: "/admin/projects/new" },
+      { icon: Plus, label: "New Service", href: "/admin/services/new" },
+    ]
+  }
 ];
 
 export default function AdminLayout({
@@ -80,12 +100,12 @@ export default function AdminLayout({
         animate={{ x: 0 }}
         transition={{ type: "spring", stiffness: 150, damping: 20 }}
         className={cn(
-          "fixed top-0 left-0 bottom-0 z-40 glass-panel border-r border-[var(--border-subtle)] flex flex-col transition-all duration-300",
+          "fixed top-0 left-0 bottom-0 z-40 bg-[var(--bg-elevated)] border-r border-[var(--border-subtle)] flex flex-col transition-all duration-300",
           sidebarCollapsed ? "w-[72px]" : "w-[260px]"
         )}
       >
         {/* Header */}
-        <div className="px-4 h-16 flex items-center justify-between border-b border-[var(--border-subtle)]">
+        <div className="px-4 h-16 flex items-center justify-between border-b border-[var(--border-subtle)] shrink-0">
           {!sidebarCollapsed && (
             <div className="flex items-center gap-2">
               <svg width="24" height="24" viewBox="0 0 100 100" fill="none">
@@ -114,28 +134,37 @@ export default function AdminLayout({
         </div>
 
         {/* Nav Links */}
-        <nav className="flex-1 px-3 py-4 space-y-1">
-          {sidebarLinks.map((link) => {
-            const Icon = link.icon;
-            const isActive =
-              pathname === link.href ||
-              (link.href !== "/admin" && pathname.startsWith(link.href));
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-[family-name:var(--font-body)] transition-all duration-200",
-                  isActive
-                    ? "bg-[var(--accent-teal)]/10 text-[var(--accent-teal-light)] border border-[var(--border-accent)]"
-                    : "text-[var(--text-bone-muted)] hover:text-[var(--text-bone)] hover:bg-[var(--bg-surface)]"
-                )}
-              >
-                <Icon size={18} />
-                {!sidebarCollapsed && link.label}
-              </Link>
-            );
-          })}
+        <nav className="flex-1 px-3 py-4 space-y-6 overflow-y-auto overflow-x-hidden no-scrollbar">
+          {sidebarGroups.map((group, idx) => (
+            <div key={idx} className="space-y-1">
+              {!sidebarCollapsed && (
+                <p className="px-3 text-[10px] uppercase tracking-widest text-[var(--text-bone-dim)] font-medium mb-2 opacity-60">
+                  {group.title}
+                </p>
+              )}
+              {group.links.map((link) => {
+                const Icon = link.icon;
+                const isActive =
+                  pathname === link.href ||
+                  (link.href !== "/admin" && pathname.startsWith(link.href));
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={cn(
+                      "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-[family-name:var(--font-body)] transition-all duration-200",
+                      isActive
+                        ? "bg-[var(--accent-teal)]/10 text-[var(--accent-teal-light)] border border-[var(--border-accent)]"
+                        : "text-[var(--text-bone-muted)] hover:text-[var(--text-bone)] hover:bg-[var(--bg-surface)]"
+                    )}
+                  >
+                    <Icon size={18} className="shrink-0" />
+                    {!sidebarCollapsed && <span className="truncate">{link.label}</span>}
+                  </Link>
+                );
+              })}
+            </div>
+          ))}
         </nav>
 
         {/* Footer */}

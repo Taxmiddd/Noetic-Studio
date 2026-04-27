@@ -66,7 +66,7 @@ export function PolicyForm({ initialData, isEditing = false }: PolicyFormProps) 
     <form onSubmit={handleSubmit} className="space-y-6 pb-20">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-6">
-          <GlassCard padding="lg">
+          <GlassCard blur={false} padding="lg">
             <h2 className="text-xl font-[family-name:var(--font-heading)] mb-6">Clause Information</h2>
             
             <div className="space-y-4">
@@ -121,7 +121,7 @@ export function PolicyForm({ initialData, isEditing = false }: PolicyFormProps) 
         </div>
 
         <div className="space-y-6">
-          <GlassCard padding="lg">
+          <GlassCard blur={false} padding="lg">
              <h3 className="heading-section text-lg mb-2">Instructions</h3>
              <p className="text-body text-xs text-[var(--text-bone-muted)] mb-4">
                 This legal segment will be dynamically displayed on your public endpoints. Ensure that it aligns visually with your pre-defined aesthetic boundaries.

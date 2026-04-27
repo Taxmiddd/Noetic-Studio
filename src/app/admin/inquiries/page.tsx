@@ -179,7 +179,7 @@ export default function AdminInquiriesPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.04 }}
             >
-              <GlassCard padding="sm" hover={false}>
+              <GlassCard blur={false} padding="sm" hover={false}>
                 <button
                   onClick={() => handleExpand(inquiry.id)}
                   className="w-full text-left"

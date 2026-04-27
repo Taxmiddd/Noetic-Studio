@@ -45,7 +45,7 @@ export default function AdminLoginPage() {
         transition={{ duration: 0.6, type: "spring", stiffness: 150 }}
         className="w-full max-w-md relative z-[60] pointer-events-auto"
       >
-        <GlassCard padding="lg" hover={false}>
+        <GlassCard blur={false} padding="lg" hover={false}>
           <div className="text-center mb-8">
             {/* Logo */}
             <div className="flex justify-center mb-6">

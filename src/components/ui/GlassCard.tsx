@@ -8,6 +8,7 @@ interface GlassCardProps {
   className?: string;
   hover?: boolean;
   padding?: "sm" | "md" | "lg";
+  blur?: boolean;
 }
 
 export function GlassCard({
@@ -15,6 +16,7 @@ export function GlassCard({
   className,
   hover = true,
   padding = "md",
+  blur = true,
 }: GlassCardProps) {
   const paddings = {
     sm: "p-4",
@@ -26,7 +28,12 @@ export function GlassCard({
     <motion.div
       whileHover={hover ? { scale: 1.01, y: -2 } : undefined}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      className={cn("glass-card rounded-2xl", paddings[padding], className)}
+      className={cn(
+        "rounded-2xl",
+        blur ? "glass-card" : "bg-[var(--bg-elevated)] border border-[var(--border-subtle)]",
+        paddings[padding],
+        className
+      )}
     >
       {children}
     </motion.div>

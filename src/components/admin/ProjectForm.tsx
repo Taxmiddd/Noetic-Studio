@@ -127,7 +127,7 @@ export function ProjectForm({ initialData, isEditing = false }: ProjectFormProps
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Main Details */}
         <div className="lg:col-span-2 space-y-6">
-          <GlassCard padding="lg">
+          <GlassCard blur={false} padding="lg">
             <h2 className="text-xl font-[family-name:var(--font-heading)] mb-6">Basic Information</h2>
             
             <div className="space-y-4">
@@ -233,7 +233,7 @@ export function ProjectForm({ initialData, isEditing = false }: ProjectFormProps
           </GlassCard>
 
           {/* Services Tags */}
-          <GlassCard padding="lg">
+          <GlassCard blur={false} padding="lg">
             <h2 className="text-xl font-[family-name:var(--font-heading)] mb-2">Services</h2>
             <p className="text-xs text-[var(--text-bone-dim)] mb-4 font-[family-name:var(--font-body)]">
               Tags shown on the case study page.
@@ -272,7 +272,7 @@ export function ProjectForm({ initialData, isEditing = false }: ProjectFormProps
           </GlassCard>
 
           {/* Gallery */}
-          <GlassCard padding="lg">
+          <GlassCard blur={false} padding="lg">
             <h2 className="text-xl font-[family-name:var(--font-heading)] mb-6">Gallery Images</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-4">
               {formData.images.map((url, i) => (
@@ -312,7 +312,7 @@ export function ProjectForm({ initialData, isEditing = false }: ProjectFormProps
 
         {/* Sidebar Settings */}
         <div className="space-y-6">
-          <GlassCard padding="lg">
+          <GlassCard blur={false} padding="lg">
             <h2 className="text-xl font-[family-name:var(--font-heading)] mb-6">Thumbnail</h2>
             <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-[var(--border-subtle)] mb-4 bg-[var(--bg-elevated)] flex items-center justify-center">
               {thumbnailFile ? (
@@ -341,7 +341,7 @@ export function ProjectForm({ initialData, isEditing = false }: ProjectFormProps
             </Button>
           </GlassCard>
 
-          <GlassCard padding="lg">
+          <GlassCard blur={false} padding="lg">
             <div className="flex items-center justify-between">
               <div>
                 <span className="text-xs uppercase tracking-wider text-[var(--text-bone-muted)] block">Featured Project</span>

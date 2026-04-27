@@ -74,7 +74,7 @@ export default function AdminProjectsPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        <GlassCard padding="sm" hover={false}>
+        <GlassCard blur={false} padding="sm" hover={false}>
           {loading ? (
             <div className="p-8 text-center text-label">Loading projects...</div>
           ) : (

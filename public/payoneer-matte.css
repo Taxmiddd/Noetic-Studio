@@ -1,0 +1,259 @@
+/**
+ * Payoneer Matte Intelligence CSS
+ * Hosted at: https://pay.noeticstudio.net/payoneer-matte.css
+ *
+ * Payoneer loads this file inside its secure iframe to style
+ * the hosted payment fields — card number, expiry, CVV inputs.
+ *
+ * Design: Matte Intelligence theme — Deep Charcoal backgrounds,
+ * Bone White text, Matte Teal accents, Space Grotesk typography.
+ */
+
+/* ─── RESET & BASE ─── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background: #040D0C;
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  color: #F5F5F0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── PAYMENT FORM CONTAINER ─── */
+.payment-form,
+#payment-form,
+.payoneer-form,
+form {
+  background: transparent;
+  padding: 0;
+}
+
+/* ─── FIELD GROUPS ─── */
+.form-group,
+.field-group,
+.input-group {
+  margin-bottom: 16px;
+}
+
+/* ─── LABELS ─── */
+label,
+.field-label,
+.input-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(245, 245, 240, 0.45);
+  margin-bottom: 8px;
+}
+
+/* ─── INPUT FIELDS ─── */
+input,
+select,
+.field-input,
+.card-input,
+.input-field,
+[data-field],
+iframe {
+  width: 100%;
+  height: 44px;
+  background: #161B22;
+  border: 1px solid #2D3748;
+  border-radius: 8px;
+  padding: 0 14px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  color: #F5F5F0;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input::placeholder,
+.card-input::placeholder {
+  color: rgba(245, 245, 240, 0.25);
+}
+
+input:focus,
+select:focus,
+.field-input:focus,
+.card-input:focus,
+[data-field]:focus {
+  border-color: #0D7377;
+  box-shadow: 0 0 0 3px rgba(13, 115, 119, 0.15);
+}
+
+input:hover,
+.field-input:hover,
+.card-input:hover {
+  border-color: rgba(245, 245, 240, 0.2);
+}
+
+/* ─── CARD NUMBER FIELD ─── */
+.card-number,
+#card-number,
+[id*="card-number"],
+[name*="cardNumber"],
+[autocomplete="cc-number"] {
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── EXPIRY & CVV ROW ─── */
+.expiry-cvv-row,
+.card-details-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* ─── ERROR STATES ─── */
+input.error,
+input[aria-invalid="true"],
+.field-error input,
+.input-error {
+  border-color: #EF4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.error-message,
+.field-error-text,
+.validation-error {
+  font-size: 11px;
+  color: #FC8181;
+  margin-top: 6px;
+  letter-spacing: 0.02em;
+}
+
+/* ─── PAY NOW BUTTON ─── */
+button[type="submit"],
+.submit-button,
+.pay-button,
+#pay-now,
+.payoneer-submit {
+  width: 100%;
+  height: 52px;
+  margin-top: 20px;
+  background: #F5F5F0;
+  border: none;
+  border-radius: 8px;
+  color: #040D0C;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+button[type="submit"]:hover,
+.submit-button:hover,
+.pay-button:hover {
+  background: #FFFFFF;
+  box-shadow: 0 4px 20px rgba(245, 245, 240, 0.15);
+  transform: translateY(-1px);
+}
+
+button[type="submit"]:active,
+.submit-button:active {
+  transform: translateY(0);
+}
+
+button[type="submit"]:disabled,
+.submit-button:disabled,
+.pay-button:disabled {
+  background: rgba(245, 245, 240, 0.3);
+  color: rgba(4, 13, 12, 0.5);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ─── LOADING STATE ─── */
+.loading,
+.spinner,
+[data-loading="true"] {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* ─── SECURITY BADGE ─── */
+.security-badge,
+.ssl-badge,
+.pci-badge {
+  font-size: 10px;
+  color: rgba(245, 245, 240, 0.35);
+  text-align: center;
+  margin-top: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ─── CARD ICONS ─── */
+.card-icons,
+.payment-methods {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+  opacity: 0.5;
+}
+
+/* ─── SELECT DROPDOWN ─── */
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23F5F5F0' opacity='0.4'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+select option {
+  background: #161B22;
+  color: #F5F5F0;
+}
+
+/* ─── DIVIDERS & SEPARATORS ─── */
+hr, .divider, .separator {
+  border: none;
+  border-top: 1px solid rgba(245, 245, 240, 0.06);
+  margin: 16px 0;
+}
+
+/* ─── TYPOGRAPHY ─── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat', 'Space Grotesk', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #F5F5F0;
+  margin-bottom: 16px;
+}
+
+p, span, .text {
+  color: rgba(245, 245, 240, 0.55);
+  line-height: 1.6;
+}
+
+a, .link {
+  color: #14B8A6;
+  text-decoration: none;
+}
+
+a:hover, .link:hover {
+  text-decoration: underline;
+}

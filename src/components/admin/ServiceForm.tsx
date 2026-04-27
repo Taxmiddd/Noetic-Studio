@@ -70,7 +70,7 @@ export function ServiceForm({ initialData, isEditing = false }: ServiceFormProps
     <form onSubmit={handleSubmit} className="space-y-6 pb-16">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-6">
-          <GlassCard padding="lg">
+          <GlassCard blur={false} padding="lg">
             <h2 className="text-xl font-[family-name:var(--font-heading)] mb-6">Service Details</h2>
             <div className="space-y-4">
               <div>
@@ -109,7 +109,7 @@ export function ServiceForm({ initialData, isEditing = false }: ServiceFormProps
         </div>
 
         <div className="space-y-6">
-          <GlassCard padding="lg">
+          <GlassCard blur={false} padding="lg">
             <h2 className="text-xl font-[family-name:var(--font-heading)] mb-4">Icon</h2>
             <div className="grid grid-cols-4 gap-2">
               {ICON_OPTIONS.map((icon) => (
@@ -130,7 +130,7 @@ export function ServiceForm({ initialData, isEditing = false }: ServiceFormProps
             </div>
           </GlassCard>
 
-          <GlassCard padding="lg">
+          <GlassCard blur={false} padding="lg">
             <div className="space-y-4">
               <div>
                 <label className="block text-label text-[10px] mb-1.5 uppercase tracking-wider">Display Order</label>

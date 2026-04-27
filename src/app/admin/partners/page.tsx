@@ -185,7 +185,7 @@ export default function AdminPartnersPage() {
 
       {/* Partners Table */}
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-        <GlassCard padding="sm" hover={false}>
+        <GlassCard blur={false} padding="sm" hover={false}>
           {loading ? (
             <div className="p-8 text-center text-label">Loading partners...</div>
           ) : (
