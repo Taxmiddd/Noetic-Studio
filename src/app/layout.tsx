@@ -156,6 +156,18 @@ export default function RootLayout({
       className={`${montserrat.variable} ${spaceGrotesk.variable} ${playfair.variable}`}
     >
       <head>
+        {/* Google tag (gtag.js) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0E3MJPSV74"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-0E3MJPSV74');
+            `,
+          }}
+        />
         <link rel="preconnect" href="https://eoxfhufkayryfzqtnjsp.supabase.co" />
         <link rel="dns-prefetch" href="https://eoxfhufkayryfzqtnjsp.supabase.co" />
       </head>
