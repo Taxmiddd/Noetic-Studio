@@ -9,9 +9,13 @@ interface Partner {
   name: string;
 }
 
-export function PartnersSection() {
-  const [partners, setPartners] = useState<Partner[]>([]);
-  const [mounted, setMounted] = useState(false);
+interface PartnersSectionProps {
+  initialPartners?: Partner[];
+}
+
+export function PartnersSection({ initialPartners }: PartnersSectionProps) {
+  const [partners, setPartners] = useState<Partner[]>(initialPartners ?? []);
+  const [mounted, setMounted] = useState(!!initialPartners);
   const supabase = createClient();
 
   useEffect(() => {
@@ -19,11 +23,8 @@ export function PartnersSection() {
   }, []);
 
   useEffect(() => {
-    // Only attempt fetch if environment variables are present
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-      console.warn("Supabase configuration missing in PartnersSection.");
-      return;
-    }
+    if (initialPartners !== undefined) return;
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) return;
 
     async function fetchPartners() {
       try {
@@ -32,14 +33,14 @@ export function PartnersSection() {
           .select("id, name")
           .eq("is_active", true)
           .order("display_order", { ascending: true });
-        
+
         if (data) setPartners(data);
       } catch (e) {
         console.error("Failed to fetch partners:", e);
       }
     }
     fetchPartners();
-  }, [supabase]);
+  }, []);
 
   // Handle empty or small lists by duplicating for marquee effect
   const marqueePartners = partners.length > 0 

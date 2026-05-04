@@ -39,12 +39,23 @@ const demoBackups: Partial<Project>[] = [
   },
 ];
 
-export function WorkShowcase() {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
+interface WorkShowcaseProps {
+  initialProjects?: Project[];
+}
+
+export function WorkShowcase({ initialProjects }: WorkShowcaseProps) {
+  const resolved =
+    initialProjects !== undefined
+      ? initialProjects.length > 0
+        ? initialProjects
+        : (demoBackups as Project[])
+      : [];
+  const [projects, setProjects] = useState<Project[]>(resolved);
+  const [loading, setLoading] = useState(initialProjects === undefined);
   const supabase = createClient();
 
   useEffect(() => {
+    if (initialProjects !== undefined) return;
     async function fetchProjects() {
       try {
         const { data } = await supabase
@@ -53,7 +64,7 @@ export function WorkShowcase() {
           .eq("is_featured", true)
           .order("display_order", { ascending: true })
           .limit(4);
-        
+
         if (data && data.length > 0) {
           setProjects(data);
         } else {
@@ -66,7 +77,7 @@ export function WorkShowcase() {
       }
     }
     fetchProjects();
-  }, [supabase]);
+  }, []);
 
   if (loading) return null;
 

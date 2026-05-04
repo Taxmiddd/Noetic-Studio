@@ -3,10 +3,17 @@
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 
 const Aurora = dynamic(() => import("@/components/ui/Aurora"), { ssr: false });
 
 export function HeroSection() {
+  const [showAurora, setShowAurora] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setShowAurora(true), 200);
+    return () => clearTimeout(t);
+  }, []);
 
   return (
     <section
@@ -17,12 +24,14 @@ export function HeroSection() {
 
       {/* Aurora Background */}
       <div className="absolute inset-0 z-0">
-        <Aurora 
-          colorStops={["#0D7377", "#14B8A6", "#040D0C"]}
-          blend={0.6}
-          amplitude={1.2}
-          speed={0.5}
-        />
+        {showAurora && (
+          <Aurora
+            colorStops={["#0D7377", "#14B8A6", "#040D0C"]}
+            blend={0.6}
+            amplitude={1.2}
+            speed={0.5}
+          />
+        )}
       </div>
 
       <div className="absolute inset-0 opacity-[0.02] z-[1] pointer-events-none"
